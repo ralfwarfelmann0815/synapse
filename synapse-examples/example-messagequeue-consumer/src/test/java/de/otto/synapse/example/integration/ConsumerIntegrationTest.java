@@ -39,27 +39,23 @@ public class ConsumerIntegrationTest {
     MyServiceProperties properties;
 
     @Autowired
-    SQSAsyncClient sqsAsyncClient;
-
-    @Autowired
-    private MessageSenderEndpoint configMessageSender;
+    @Qualifier("bananaMessageSender")
+    private MessageSenderEndpoint bananaMessageSender;
 
     @Test
-    public void shouldRetrieveBananasFromStream() throws InterruptedException {
+    public void shouldRetrieveBananasFromStream() {
         // given
         BananaPayload bananaPayload = new BananaPayload();
-        bananaPayload.setId("banana_id");
+        bananaPayload.setId("");
         bananaPayload.setColor("yellow");
 
         // when
-        //bananaMessageSender.send(message("", bananaPayload));
-        configMessageSender.send(message("","payload stuff"));
-        Thread.sleep(20000);
+        bananaMessageSender.send(message("", bananaPayload)); // no message keys allowed in sqs
 
         // then
         Awaitility.await()
-                .atMost(5, TimeUnit.SECONDS);
-  //              .until(() -> bananaProductStateRepository.get("").isPresent());
+                .atMost(3, TimeUnit.SECONDS)
+                .until(() -> bananaProductStateRepository.get("").isPresent());
 
         Optional<BananaProduct> optionalBananaProduct = bananaProductStateRepository.get("");
         assertThat(optionalBananaProduct.map(BananaProduct::getColor), is(Optional.of("yellow")));

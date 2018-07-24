@@ -44,16 +44,10 @@ public class SqsAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(SQSAsyncClient.class)
     public SQSAsyncClient sqsAsyncClient(final AwsCredentialsProvider credentialsProvider) {
-        try {
             return SQSAsyncClient.builder()
-                    .endpointOverride(new URI("https://sqs.eu-central-1.amazonaws.com/159193630992/"))
                     .credentialsProvider(credentialsProvider)
                     .region(Region.of(awsProperties.getRegion()))
                     .build();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Bean

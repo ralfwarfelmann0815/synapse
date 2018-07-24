@@ -11,13 +11,13 @@ import java.net.URI;
 @Configuration
 public class SqsTestConfiguration {
 
-//    @Bean
-//    public SQSAsyncClient sqsAsyncClient() {
-//        return SQSAsyncClient.builder()
-//                .credentialsProvider(StaticCredentialsProvider.create(
-//                        AwsCredentials.create("foobar", "foobar")))
-//                .endpointOverride(URI.create("http://localhost:4576"))
-//                .build();
-//    }
+    @Bean
+    public SQSAsyncClient sqsAsyncClient() {
+        return SQSAsyncClient.builder()
+                .credentialsProvider(StaticCredentialsProvider.create(
+                        AwsCredentials.create("foobar", "foobar")))
+                .endpointOverride(URI.create("http://localhost:4576"))
+                .build();
+    }
 
 }
