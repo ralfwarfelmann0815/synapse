@@ -23,7 +23,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 @Configuration
 @ImportAutoConfiguration(InMemoryTestConfiguration.class)
 @EnableConfigurationProperties({MyServiceProperties.class})
-@EnableEventSource(name = "bananaSource",  channelName = "${exampleservice.banana-channel}")
+@EnableEventSource(name = "bananaSource", channelName = "${exampleservice.banana-channel}")
 @EnableEventSource(name = "productSource", channelName = "${exampleservice.product-channel}")
 public class ExampleConfiguration implements MessageEndpointConfigurer {
 

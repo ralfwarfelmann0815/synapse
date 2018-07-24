@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Bean;
 import static org.slf4j.LoggerFactory.getLogger;
 
 /**
- * Configuration used to implement tests. Use this, if you want to bypass Kinesis and other hard-to-test
+ * Configuration used to implement tests. Use this, if you want to bypass SQS and other hard-to-test
  * infrastructures and replace them by in-memory implementations.
  * <p>
  *     {@code InMemoryTestConfiguration} can be activated by {@link org.springframework.boot.autoconfigure.ImportAutoConfiguration importing} it
@@ -32,11 +32,11 @@ import static org.slf4j.LoggerFactory.getLogger;
  * }
  * </code></pre>
  */
-public class InMemoryTestConfiguration {
+public class InMemoryMessageQueueTestConfiguration {
 
     // TODO: in eine testsupport lib verschieben
 
-    private static final Logger LOG = getLogger(InMemoryTestConfiguration.class);
+    private static final Logger LOG = getLogger(InMemoryMessageQueueTestConfiguration.class);
 
     @Bean
     public InMemoryChannels inMemoryChannels(final ObjectMapper objectMapper, final ApplicationEventPublisher eventPublisher) {
@@ -44,7 +44,7 @@ public class InMemoryTestConfiguration {
     }
 
     @Bean
-    public InMemoryMessageSenderFactory kinesisSenderEndpointFactory(final MessageInterceptorRegistry interceptorRegistry,
+    public MessageSenderEndpointFactory sqsSenderEndpointFactory(final MessageInterceptorRegistry interceptorRegistry,
                                                                              final InMemoryChannels inMemoryChannels, final ObjectMapper objectMapper) {
         LOG.warn("Creating InMemoryMessageSenderFactory. This should only be used in tests");
         return new InMemoryMessageSenderFactory(interceptorRegistry, inMemoryChannels, objectMapper);
